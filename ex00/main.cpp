@@ -5,8 +5,9 @@ int main(int ac, char **av)
     if (ac != 2)
     {
         std::cout<<"Error: could not open file."<<std::endl;
-        return (0);fff
+        return (0);
     }
-    std::string file_name = (std::string)av[1];
+    BitcoinExchange bitcoinEx(av[1]);
+    std::cout<< bitcoinEx.getBuffer();
     return (0);
 }
