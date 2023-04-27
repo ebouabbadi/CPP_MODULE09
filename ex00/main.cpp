@@ -8,6 +8,5 @@ int main(int ac, char **av)
         return (0);
     }
     BitcoinExchange bitcoinEx(av[1]);
-    std::cout<< bitcoinEx.getBuffer();
     return (0);
 }

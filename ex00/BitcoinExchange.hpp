@@ -4,16 +4,24 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <map>
+
 
 class BitcoinExchange
 {
 private:
-    std::string _buffer;
+    std::map<std::string, double> _Input;
+    std::map<std::string, double> _Data;
 public:
     BitcoinExchange();
     BitcoinExchange(char *av);
-    std::string getBuffer();
+    std::map<std::string, double> getInput();
+    std::map<std::string, double> getData();
     ~BitcoinExchange();
+    void returnData();
+    void returnInput();
+    void   acceptanceStation(std::string data, std::string input);
+
 };
 
 #endif

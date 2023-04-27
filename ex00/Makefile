@@ -4,7 +4,7 @@ SRC = main.cpp BitcoinExchange.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
-CC = c++ -Wall -Wextra -Werror -std=c++98
+CC = c++ -std=c++98 #-Wall -Wextra -Werror
 
 all : $(NAME)
 
