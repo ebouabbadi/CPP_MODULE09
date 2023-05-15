@@ -18,10 +18,6 @@ public:
     std::map<std::string, double> getInput();
     std::map<std::string, double> getData();
     ~BitcoinExchange();
-    void returnData();
-    void returnInput();
-    void   acceptanceStation(std::string data, std::string input);
-
 };
 
 #endif
