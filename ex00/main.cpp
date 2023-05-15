@@ -2,11 +2,18 @@
 
 int main(int ac, char **av)
 {
-    if (ac != 2)
+    try
     {
-        std::cout<<"Error: could not open file."<<std::endl;
-        return (0);
+        if (ac != 2)
+        {
+            throw "Error: could not open file.";
+        }
+        BitcoinExchange bitcoinEx(av[1]);
     }
-    BitcoinExchange bitcoinEx(av[1]);
+    catch (const char *str)
+    {
+        std::cerr <<str<< '\n';
+    }
+
     return (0);
 }
