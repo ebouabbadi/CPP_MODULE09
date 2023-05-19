@@ -18,6 +18,9 @@ public:
     BitcoinExchange();
     BitcoinExchange(char *av);
     std::string    openAndReadFile(std::string nameFile);
+    void  shippingData();
+    void  shippingInput();
+    int parsingInput(std::string date, std::string value);
     std::map<std::string, double> getInput();
     std::map<std::string, double> getData();
     ~BitcoinExchange();
