@@ -10,7 +10,7 @@ std::string BitcoinExchange::openAndReadFile(std::string nameFile)
     std::string buffer;
     if (file.is_open())
     {
-        std::string line;
+        std::string line;0
         while (std::getline(file, line))
         {
             buffer += line;
@@ -26,10 +26,9 @@ std::string BitcoinExchange::openAndReadFile(std::string nameFile)
 BitcoinExchange::BitcoinExchange(char *av)
 {
     (void)av;
-    this->_bufferData = openAndReadFile((std::string)av);
-    this->_bufferInput = openAndReadFile("input.txt");
-    this->shippingData();
-    this->shippingInput();
+    this->_bufferInput = openAndReadFile((std::string)av);
+    // this->shippingData()
+    ;
 }
 
 void BitcoinExchange::shippingData()
@@ -49,24 +48,7 @@ void BitcoinExchange::shippingData()
     }
 }
 
-void BitcoinExchange::shippingInput()
-{
-    for (size_t i = 0; i < this->_bufferInput.size(); i++)
-    {
-        std::string date;
-        for (; this->_bufferInput[i] != '|'; i++)
-            date.push_back(this->_bufferInput[i]);
-        std::string value;
-        for (i++; this->_bufferInput[i] != '\n'; i++)
-            value.push_back(this->_bufferInput[i]);
-        this->_Input.insert(std::make_pair(date, std::stod(value)));
-    }
-     for (const auto& entry : this->_Input) {
-        std::cout << "Key 2: " << entry.first << "---- Value: " << entry.second << std::endl;
-    }
-}
-
-int BitcoinExchange::parsingInput(std::string date, std::string value)
+int BitcoinExchange::parsingInput(std::string line)
 {
     
 }
@@ -74,11 +56,6 @@ int BitcoinExchange::parsingInput(std::string date, std::string value)
 std::map<std::string, double> BitcoinExchange::getData()
 {
     return (this->_Data);
-}
-
-std::map<std::string, double> BitcoinExchange::getInput()
-{
-    return (this->_Input);
 }
 
 BitcoinExchange::~BitcoinExchange()

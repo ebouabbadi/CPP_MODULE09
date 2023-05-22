@@ -10,7 +10,7 @@ int main(int ac, char **av)
         }
         BitcoinExchange bitcoinEx(av[1]);
     }
-    catch (const char *str)
+    catch (char const *str)
     {
         std::cerr <<str<< '\n';
     }

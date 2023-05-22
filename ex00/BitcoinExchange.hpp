@@ -10,7 +10,6 @@
 class BitcoinExchange
 {
 private:
-    std::map<std::string, double> _Input;
     std::map<std::string, double> _Data;
     std::string _bufferInput;
     std::string _bufferData;
@@ -19,9 +18,7 @@ public:
     BitcoinExchange(char *av);
     std::string    openAndReadFile(std::string nameFile);
     void  shippingData();
-    void  shippingInput();
-    int parsingInput(std::string date, std::string value);
-    std::map<std::string, double> getInput();
+    int parsingInput(std::string line);
     std::map<std::string, double> getData();
     ~BitcoinExchange();
 };

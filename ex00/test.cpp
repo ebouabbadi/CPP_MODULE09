@@ -1,24 +1,43 @@
 #include <iostream>
-#include <fstream>
+#include <map>
 #include <string>
 
 int main() {
-  std::ifstream file("data.csv");
-  if (!file.is_open()) {
-    std::cerr << "Error: could not open file.\n";
-    return 1;
-  }
+    std::map<std::string, double> container;
 
-  std::string file_contents;
-  std::string line;
-  while (std::getline(file, line)) {
-    file_contents += line;
-    file_contents += "\n";
-  }
+    while (true) {
+        std::string key;
+        double value;
 
-  file.close();
+        std::cout << "Enter a string: ";
+        std::cin >> key;
 
-  std::cout << "File contents:\n" << file_contents << "\n";
+        std::cout << "Enter a double value: ";
+        std::cin >> value;
 
-  return 0;
+        // Check if the string already exists in the map
+        auto it = container.find(key);
+        if (it != container.end()) {
+            std::cout << "String already exists in the map. Updating the value." << std::endl;
+            it->second = value;  // Update the double value
+        } else {
+            // Insert the string and double value into the map
+            container[key] = value;
+        }
+
+        char choice;
+        std::cout << "Do you want to continue (y/n)? ";
+        std::cin >> choice;
+
+        if (choice != 'y' && choice != 'Y')
+            break;
+    }
+
+    // Print the contents of the map
+    std::cout << "Map contents:" << std::endl;
+    for (const auto& entry : container) {
+        std::cout << "String: " << entry.first << ", Double: " << entry.second << std::endl;
+    }
+
+    return 0;
 }
