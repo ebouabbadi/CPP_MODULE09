@@ -2,6 +2,7 @@
 
 BitcoinExchange::BitcoinExchange()
 {
+
 }
 
 std::string BitcoinExchange::openAndReadFile(std::string nameFile)
@@ -10,7 +11,7 @@ std::string BitcoinExchange::openAndReadFile(std::string nameFile)
     std::string buffer;
     if (file.is_open())
     {
-        std::string line;0
+        std::string line;
         while (std::getline(file, line))
         {
             buffer += line;
@@ -22,13 +23,14 @@ std::string BitcoinExchange::openAndReadFile(std::string nameFile)
         throw "Error: could not open file.";
     return (buffer);
 }
-
+ 
 BitcoinExchange::BitcoinExchange(char *av)
 {
     (void)av;
     this->_bufferInput = openAndReadFile((std::string)av);
-    // this->shippingData()
-    ;
+    this->_bufferData = openAndReadFile("data.csv");
+    shippingData();
+    std::cout<<this->_bufferInput;
 }
 
 void BitcoinExchange::shippingData()
@@ -46,11 +48,6 @@ void BitcoinExchange::shippingData()
             value.push_back(this->_bufferData[i]);
         this->_Data.insert(std::make_pair(date, std::stod(value)));
     }
-}
-
-int BitcoinExchange::parsingInput(std::string line)
-{
-    
 }
 
 std::map<std::string, double> BitcoinExchange::getData()
