@@ -160,20 +160,44 @@ std::string checkInput(int y, int m, int d, double v)
 
 void BitcoinExchange::exchangeRate(int years, int month, int day, double value)
 {
-    std::string date;
-    date.append(std::to_string(years));
-    if (month < 10)
-        date.append("-0");
-    date.append(std::to_string(month));
-    if (day < 10)
-        date.append("-0");
-    date.append(std::to_string(day));
-    std::map<std::string, double>::iterator it =  this->_Data.begin();
-    std::map<std::string, double>::iterator itEnd =  this->_Data.end();
-    for (; it != itEnd; it++)
+    while (true)
     {
-        if (!it->first.compare(date))
-            std::cout<<date <<" => "<<value << " = "<<it->second *  value<<std::endl;
+        std::string date;
+        date.append(std::to_string(years));
+        date.append("-");
+        if (month < 10)
+            date.append("0");
+        date.append(std::to_string(month));
+        date.append("-");
+        if (day < 10)
+            date.append("0");
+        date.append(std::to_string(day));
+        std::map<std::string, double>::iterator it = this->_Data.begin();
+        std::map<std::string, double>::iterator itEnd = this->_Data.end();
+        std::cout << date << std::endl;
+        for (; it != itEnd; it++)
+        {
+            if (!it->first.compare(date))
+            {
+                std::cout << date << " => " << value << " = " << it->second * value << std::endl;
+                return;
+            }
+        }
+        if (day < 31)
+            day++;
+        else
+        {
+            if (month < 12)
+            {
+                month++;
+                day = 1;
+            }
+            else
+            {
+                if (years < 2023)
+            }
+        }
+        break;
     }
 }
 
