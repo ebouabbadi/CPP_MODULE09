@@ -6,6 +6,11 @@
 #include <sstream>
 #include <map>
 
+#define BADINPUT 10
+#define NOTPOSITIVE 11
+#define LARGENUMBER 12
+#define VALID 13
+
 class BitcoinExchange
 {
 private:
@@ -19,10 +24,10 @@ public:
     BitcoinExchange(char *av);
     std::string openAndReadFile(std::string nameFile);
     void shippingData();
-    std::string parsingInput(std::string str);
+    int parsingInput(std::string str);
     void split_input();
     std::map<std::string, double> getData();
-    void exchangeRate(int years, int month, int day, double);
+    int exchangeRate(int years, int month, int day, double);
     ~BitcoinExchange();
 };
 

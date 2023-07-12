@@ -30,16 +30,16 @@ BitcoinExchange::BitcoinExchange(char *av)
     this->shippingData();
     this->split_input();
     if (this->_Input[0] != "date | value")
-        throw "Error: bad input => first line not good\n";
+        throw "Error: bad input => first line not good";
     for (size_t i = 1; i < _Input.size(); i++)
     {
-        std::string token = this->parsingInput(this->_Input[i]);
-        if (!token.compare("Valid"))
-            std::cout << "valide input\n";
-        else if (!token.compare("Error: bad input"))
-            std::cout << token << " => " << this->_Input[i] << std::endl;
-        // else
-        //     std::cout << token << std::endl;
+        int token = this->parsingInput(this->_Input[i]);
+        if (token == BADINPUT)
+            std::cout << "Error: bad input => " << this->_Input[i] << std::endl;
+        else if (token == NOTPOSITIVE)
+            std::cout << "Error: not a positive number." << std::endl;
+        else if (token == LARGENUMBER)
+            std::cout << "Error: too large a number." << std::endl;
     }
 }
 
@@ -140,47 +140,52 @@ bool checkDate(int y, int m, int d)
     return (true);
 }
 
-std::string checkInput(int y, int m, int d, double v)
+int checkInput(int y, int m, int d, double v)
 {
     if (y < 2023 && y >= 2009)
     {
         if (y == 2022 && m > 3)
-            return ("Error: bad input");
+            return (BADINPUT);
         if (checkDate(y, m, d) == false)
-            return ("Error: bad input");
+            return (BADINPUT);
         if (v < 0)
-            return ("Error: not a positive number.");
+            return (NOTPOSITIVE);
         if (v > 1000)
-            return ("Error: too large a number.");
+            return (LARGENUMBER);
     }
     else
-        return ("Error: bad input");
-    return ("Valid");
+        return (BADINPUT);
+    return (VALID);
 }
 
-void BitcoinExchange::exchangeRate(int years, int month, int day, double value)
+std::string createDate(int years, int month, int day)
 {
+    std::string date;
+    date.append(std::to_string(years));
+    date.append("-");
+    if (month < 10)
+        date.append("0");
+    date.append(std::to_string(month));
+    date.append("-");
+    if (day < 10)
+        date.append("0");
+    date.append(std::to_string(day));
+    return (date);
+}
+
+int BitcoinExchange::exchangeRate(int years, int month, int day, double value)
+{
+    std::string date = createDate(years, month, day);
     while (true)
     {
-        std::string date;
-        date.append(std::to_string(years));
-        date.append("-");
-        if (month < 10)
-            date.append("0");
-        date.append(std::to_string(month));
-        date.append("-");
-        if (day < 10)
-            date.append("0");
-        date.append(std::to_string(day));
         std::map<std::string, double>::iterator it = this->_Data.begin();
         std::map<std::string, double>::iterator itEnd = this->_Data.end();
-        std::cout << date << std::endl;
         for (; it != itEnd; it++)
         {
-            if (!it->first.compare(date))
+            if (!it->first.compare(createDate(years, month, day)))
             {
                 std::cout << date << " => " << value << " = " << it->second * value << std::endl;
-                return;
+                return (VALID);
             }
         }
         if (day < 31)
@@ -194,30 +199,31 @@ void BitcoinExchange::exchangeRate(int years, int month, int day, double value)
             }
             else
             {
-                if (years < 2023)
+                years++;
+                month = 1;
+                day = 1;
             }
         }
-        break;
     }
+    return (VALID);
 }
 
-std::string BitcoinExchange::parsingInput(std::string str)
+int BitcoinExchange::parsingInput(std::string str)
 {
     int years, month, day;
     double value;
     if (str[4] != '-' || str[7] != '-' || str.substr(10, 3).compare(" | "))
-        return ("Error: bad input");
+        return (BADINPUT);
     if (!stringDigit(str.substr(0, 4)) || !stringDigit(str.substr(5, 2)) || !stringDigit(str.substr(8, 2)) || !stringDigitOrDouble(str.substr(13, str.length() - 13)))
-        return ("Error: bad input");
+        return (BADINPUT);
     years = std::stoi(str.substr(0, 4));
     month = std::stoi(str.substr(5, 2));
     day = std::stoi(str.substr(8, 2));
     value = std::stod(str.substr(13, str.length() - 13));
-    std::string Error = checkInput(years, month, day, value);
-    if (Error.compare("Valid"))
-        return (Error);
-    exchangeRate(years, month, day, value);
-    return ("Valid");
+    int token = checkInput(years, month, day, value);
+    if (token != VALID)
+        return (token);
+    return (exchangeRate(years, month, day, value));
 }
 
 std::map<std::string, double> BitcoinExchange::getData()
