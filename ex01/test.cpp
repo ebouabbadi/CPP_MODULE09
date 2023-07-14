@@ -1,65 +1,52 @@
 #include <iostream>
-#include <stack>
+#include <vector>
 #include <sstream>
+#include <stack>
 
 using namespace std;
 
-int main(int argc, char *argv[]) {
-    if (argc != 2) {
-        cerr << "Usage: RPN <expression>" << endl;
-        return 1;
+double evaluateRPN(const string& expression) {
+    vector<string> tokens;
+    stringstream ss(expression);
+    string token;
+
+    while (ss >> token) {
+        tokens.push_back(token);
     }
 
-    istringstream iss(argv[1]);
-    string token;
-    stack<int> operands;
+    stack<double> operands;
 
-    while (iss >> token) {
+    for (const auto& token : tokens) {
         if (token == "+" || token == "-" || token == "*" || token == "/") {
-            // Ensure that there are at least two operands on the stack
-            if (operands.size() < 2) {
-                cerr << "Error: insufficient operands for operator " << token << endl;
-                return 1;
-            }
+            double operand2 = operands.top();
+            operands.pop();
+            double operand1 = operands.top();
+            operands.pop();
 
-            // Pop the top two operands from the stack and apply the operator
-            int b = operands.top(); operands.pop();
-            int a = operands.top(); operands.pop();
+            double result;
+            if (token == "+")
+                result = operand1 + operand2;
+            else if (token == "-")
+                result = operand1 - operand2;
+            else if (token == "*")
+                result = operand1 * operand2;
+            else if (token == "/")
+                result = operand1 / operand2;
 
-            if (token == "+") {
-                operands.push(a + b);
-            } else if (token == "-") {
-                operands.push(a - b);
-            } else if (token == "*") {
-                operands.push(a * b);
-            } else if (token == "/") {
-                if (b == 0) {
-                    cerr << "Error: division by zero" << endl;
-                    return 1;
-                }
-                operands.push(a / b);
-            }
+            operands.push(result);
         } else {
-            // Parse the operand and push it onto the stack
-            int operand;
-            try {
-                operand = stoi(token);
-            } catch (invalid_argument&) {
-                cerr << "Error: invalid operand " << token << endl;
-                return 1;
-            }
+            double operand = stod(token);
             operands.push(operand);
         }
     }
 
-    // Ensure that there is exactly one operand on the stack
-    if (operands.size() != 1) {
-        cerr << "Error: too many operands" << endl;
-        return 1;
-    }
+    return operands.top();
+}
 
-    // Output the result
-    cout << operands.top() << endl;
+int main() {
+    string expression = "4 5 + 7 2 - *";
+    double result = evaluateRPN(expression);
+    cout << "Result: " << result << endl;
 
     return 0;
 }
