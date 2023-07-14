@@ -6,8 +6,10 @@ class RPN
 {
 private:
     int _rpn;
-public: 
+    std::string _arg;
+public:
     RPN();
-    RPN(char **av);
+    RPN(char *av);
+    void    parseRPN();
     ~RPN();
 };
