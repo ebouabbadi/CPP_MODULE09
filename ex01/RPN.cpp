@@ -2,6 +2,7 @@
 
 RPN::RPN()
 {
+    std::cout<<"default\n";
 }
 
 RPN::RPN(char *av)
