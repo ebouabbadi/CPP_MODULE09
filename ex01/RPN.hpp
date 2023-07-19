@@ -5,11 +5,12 @@
 class RPN
 {
 private:
-    int _rpn;
     std::string _arg;
+    std::vector<int>    _Rpn;
 public:
     RPN();
     RPN(char *av);
     void    parseRPN();
+    void    workNow(std::string argn);
     ~RPN();
 };
