@@ -10,10 +10,10 @@ double evaluateRPN(const string& expression) {
     stringstream ss(expression);
     string token;
 
-    while (ss >> token) {
+    while (ss >> token) {`
         tokens.push_back(token);
     }
-
+ 
     stack<double> operands;
 
     for (const auto& token : tokens) {
@@ -25,7 +25,7 @@ double evaluateRPN(const string& expression) {
 
             double result;
             if (token == "+")
-                result = operand1 + operand2;
+                result = operand1 + operand2; 
             else if (token == "-")
                 result = operand1 - operand2;
             else if (token == "*")
@@ -44,7 +44,7 @@ double evaluateRPN(const string& expression) {
 }
 
 int main() {
-    string expression = "4 5 + 7 2 - *";
+    string expression = "4 5 2 + *";
     double result = evaluateRPN(expression);
     cout << "Result: " << result << endl;
 
