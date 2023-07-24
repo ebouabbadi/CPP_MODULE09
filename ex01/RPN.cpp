@@ -33,7 +33,7 @@ void RPN::split_arg(std::string arg)
             i++;
         }
         if (!token.empty())
-            this->_Token.push_back(token);
+            this->_T.push_back(token);
     }
 }
 
@@ -54,41 +54,42 @@ bool operation(char c)
 void RPN::parseRPN()
 {
     this->split_arg(this->_arg);
-    for (size_t i = 0; i < this->_Token.size(); i++)
+    for (size_t i = 0; i < this->_T.size(); i++)
     {
-        if (this->_Token[i].size() > 1)
+        if (this->_T[i].size() > 1)
             throw "Error.";
-        if (checkToken(this->_Token[i][0]) == false)
+        if (checkToken(this->_T[i][0]) == false)
             throw "Error.";
-        this->_Tok.push_back(this->_Token[i][0]);
     }
-    if (isdigit(this->_Tok[0]) && isdigit(this->_Tok[1]) && operation(this->_Tok[2]))
+    // if (!isdigit(this->_T[0][0]))
+    //     throw "Error.";
+    for (int i = 1; i < this->_T.size(); i++)
     {
-        if (this->_Tok[2] == '+')
-            this->_Rpn.push_back((this->_Tok[0] - 48) + this->_Tok[1] - 48));
-        else if (this->_Tok[2] == '-')
-            this->_Rpn.push_back((this->_Tok[0] - 48) - this->_Tok[1] - 48));
-        else if (this->_Tok[2] == '*')
-            this->_Rpn.push_back((this->_Tok[0] - 48) * this->_Tok[1] - 48));
-        else if (this->_Tok[2] == '/')
-            this->_Rpn.push_back((this->_Tok[0] - 48) / this->_Tok[1] - 48));
-    }
-    else if (isdigit(this->_Tok[0]) && isdigit(this->_Tok[1]) && isdigit(this->_Tok[2]) && operation(this->_Tok[3]))
-    {
-        ;
-    }
-    else
-    {
-        std::cout << this->_Tok[0] << this->_Tok[1] << this->_Tok[2] << this->_Tok[3] << std::endl;
-        throw "Error.1";
-    }
+        if (isdigit(this->_T[i][0]))
+        {
+            this->_Rpn.push_back(std::stoi(_T[i]));
+            std::cout << "->>>" << std::stoi(_T[i]) << std::endl;
+        }
+        else
+        {
+            if (_T[i][0] == '+')
+            {
+                this->_Rpn.push_back(_Rpn[0] + _Rpn[1]);
+                std::cout << "->>>" << (_Rpn[0] + _Rpn[1]) << std::endl;
+                // else if (_T[i][0] == '-')
 
-    for (int i = 0; i < this->_Tok.size(); i++)
-    {
-        std::cout << "|" << this->_Tok[i] << "|" << std::endl;
+                // else if (_T[i][0] == '*')
+
+                // else if (_T[i][0] == '/')
+            }
+        }
+        for (int i = 0; i < _Rpn.size(); i++)
+        {
+            std::cout << "|" << this->_Rpn[i] << "|" << std::endl;
+            _Rpn.p
+        }
     }
 }
-
-RPN::~RPN()
-{
-}
+    RPN::~RPN()
+    {
+    }
