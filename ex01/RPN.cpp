@@ -12,7 +12,7 @@ RPN::RPN(char *av)
 
 std::string eraseSpaces(std::string input)
 {
-    size_t first = input.find_first_not_of(' ');
+    size_t first = input.find_first_not_of(' '); 
     if (first == std::string::npos)
         return "";
     size_t last = input.find_last_not_of(' ');
@@ -41,7 +41,7 @@ bool checkToken(char c)
 {
     if (!isdigit(c) && c != '/' && c != '+' && c != '-' && c != '*')
         return (false);
-    return (true);
+    return (true);   
 }
 
 bool operation(char c)
@@ -86,7 +86,6 @@ void RPN::parseRPN()
         for (int i = 0; i < _Rpn.size(); i++)
         {
             std::cout << "|" << this->_Rpn[i] << "|" << std::endl;
-            _Rpn.p
         }
     }
 }
