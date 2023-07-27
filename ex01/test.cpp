@@ -47,13 +47,8 @@ void RPN::calculate(std::string input)
 	for (size_t i = 0; i < input.size(); i++)
 	{
 		char c = input[i];
-
-		if (c == ' ')
-		{
-			// skip whitespace
-			continue;
-		}
-		else if (isdigit(c))
+		
+		if (isdigit(c))
 		{
 			int number = c - '0';
 			numbers.push(number);
