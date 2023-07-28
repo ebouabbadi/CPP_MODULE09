@@ -3,15 +3,19 @@
 
 #include <list>
 #include <deque>
+#include <iostream>
 
 class PmergeMe
 {
 private:
-    std::list<int>   _List;
-    std::deque<int> _Deque;
+    std::list<int> _List;
+
 public:
-    PmergeMe();
+    PmergeMe(char **av, int ac);
+    void readPositiveInteger(char **av, int ac);
+    void    print_List();
     ~PmergeMe();
+    std::list<int>  get_List();
 };
 
 #endif
