@@ -14,6 +14,7 @@ public:
     PmergeMe(char **av, int ac);
     void readPositiveInteger(char **av, int ac);
     void    print_List();
+    void    work_List();
     ~PmergeMe();
     std::list<int>  get_List();
 };

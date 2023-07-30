@@ -46,8 +46,7 @@ void mergeInsertSort(std::list<int> &arr)
     std::list<int> leftArr, rightArr;
     std::list<int>::iterator it = arr.begin();
 
-    int mid = arr.size() / 2;
-    for (int i = 0; i < mid; ++i)
+    for (int i = 0; i < arr.size() / 2; ++i)
     {
         leftArr.push_back(*it);
         ++it;
@@ -94,7 +93,7 @@ int main(int argc, char *argv[])
         std::cout << *it << " ";
     }
     std::cout << "\n";
-
+ 
     // Sort the sequence using merge-insert sort
     std::clock_t start1 = std::clock();
     mergeInsertSort(sequence);
