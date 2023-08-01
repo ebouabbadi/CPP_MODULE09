@@ -67,6 +67,8 @@
         "locale": "cpp",
         "mutex": "cpp",
         "optional": "cpp",
-        "string_view": "cpp"
+        "string_view": "cpp",
+        "map": "cpp",
+        "iomanip": "cpp"
     }
 }
