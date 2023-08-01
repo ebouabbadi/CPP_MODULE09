@@ -23,8 +23,7 @@ void RPN::split_arg(std::string arg)
     arg = eraseSpaces(arg);
     if (arg.empty())
         throw "Error.";
-    int j = 0;
-    for (int i = 0; i < arg.size(); i++)
+    for (size_t i = 0; i < arg.size(); i++)
     {
         std::string token;
         while (arg[i] && arg[i] != ' ')
@@ -105,7 +104,7 @@ void RPN::parseRPN()
         if (checkToken(this->_T[i][0]) == false)
             throw "Error.";
     }
-    for (int i = 0; i < this->_T.size(); i++)
+    for (size_t i = 0; i < this->_T.size(); i++)
         this->calculateNumber(this->_T[i][0]);
     if (this->_Rpn.size() == 1)
 	{
