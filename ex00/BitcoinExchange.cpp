@@ -96,6 +96,8 @@ bool stringDigitOrDouble(std::string str)
 {
     size_t i = 0;
     int count = 0;
+    if (str.size() == 1 && !isdigit(str[0]))
+        return (false);
     if (str[0] == '+' || str[0] == '-')
         i++;
     for (; i < str.size(); i++)
@@ -214,7 +216,8 @@ int BitcoinExchange::parsingInput(std::string str)
     double value;
     if (str[4] != '-' || str[7] != '-' || str.substr(10, 3).compare(" | "))
         return (BADINPUT);
-    if (!stringDigit(str.substr(0, 4)) || !stringDigit(str.substr(5, 2)) || !stringDigit(str.substr(8, 2)) || !stringDigitOrDouble(str.substr(13, str.length() - 13)))
+    if (!stringDigit(str.substr(0, 4)) || !stringDigit(str.substr(5, 2))
+        || !stringDigit(str.substr(8, 2)) || !stringDigitOrDouble(str.substr(13, str.length() - 13)))
         return (BADINPUT);
     years = std::stoi(str.substr(0, 4));
     month = std::stoi(str.substr(5, 2));
