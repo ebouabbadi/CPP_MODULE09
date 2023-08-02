@@ -17,7 +17,7 @@ std::string eraseSpaces(std::string input)
         return "";
     size_t last = input.find_last_not_of(' ');
     return input.substr(first, last - first + 1);
-}
+}        
 void RPN::split_arg(std::string arg)
 {
     arg = eraseSpaces(arg);
