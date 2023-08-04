@@ -148,6 +148,8 @@ int checkInput(int y, int m, int d, double v)
     {
         if (y == 2022 && m > 3)
             return (BADINPUT);
+        if (y == 2022 && m == 3 && d > 29)
+            return (BADINPUT);
         if (checkDate(y, m, d) == false)
             return (BADINPUT);
         if (v < 0)
@@ -216,8 +218,7 @@ int BitcoinExchange::parsingInput(std::string str)
     double value;
     if (str[4] != '-' || str[7] != '-' || str.substr(10, 3).compare(" | "))
         return (BADINPUT);
-    if (!stringDigit(str.substr(0, 4)) || !stringDigit(str.substr(5, 2))
-        || !stringDigit(str.substr(8, 2)) || !stringDigitOrDouble(str.substr(13, str.length() - 13)))
+    if (!stringDigit(str.substr(0, 4)) || !stringDigit(str.substr(5, 2)) || !stringDigit(str.substr(8, 2)) || !stringDigitOrDouble(str.substr(13, str.length() - 13)))
         return (BADINPUT);
     years = std::stoi(str.substr(0, 4));
     month = std::stoi(str.substr(5, 2));
@@ -232,6 +233,20 @@ int BitcoinExchange::parsingInput(std::string str)
 std::map<std::string, double> BitcoinExchange::getData()
 {
     return (this->_Data);
+}
+
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &copy)
+{
+    *this = copy;
+}
+
+BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &copy)
+{
+    this->_Input = copy._Input;
+    this->_Data = copy._Data;
+    this->_bufferData = copy._bufferData;
+    this->_bufferInput = copy._bufferInput;
+    return (*this);
 }
 
 BitcoinExchange::~BitcoinExchange()

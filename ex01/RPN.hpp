@@ -1,3 +1,6 @@
+#ifndef RPN_HPP
+#define RPN_HPP
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -12,8 +15,12 @@ private:
 public:
     RPN();
     RPN(char *av);
-    void parseRPN();
+    RPN(const RPN &copy);
+    RPN &operator=(const RPN &copy);
+    void workRPN();
     void split_arg(std::string arg);
     void    calculateNumber(char _c);
     ~RPN();
 };
+
+#endif

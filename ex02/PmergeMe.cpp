@@ -7,7 +7,7 @@ PmergeMe::PmergeMe(char **av, int ac)
 
 bool checkNumber(std::string str)
 {
-    for (int i = 0; i < str.size(); i++)
+    for (size_t i = 0; i < str.size(); i++)
     {
         if (!isdigit(str[i]))
             return (false);
@@ -35,7 +35,7 @@ void mergeIS(std::list<int> &listArr)
         return;
     std::list<int> l_List, r_List;
     std::list<int>::iterator it = listArr.begin();
-    for (int i = 0; i < listArr.size() / 2; i++)
+    for (size_t i = 0; i < listArr.size() / 2; i++)
     {
         l_List.push_back(*it);
         it++;
@@ -78,7 +78,7 @@ void mergeIS(std::deque<int> &dequeArr)
         return;
     std::deque<int> l_Deque, r_Deque;
     std::deque<int>::iterator it = dequeArr.begin();
-    for (int i = 0; i < dequeArr.size() / 2; i++)
+    for (size_t i = 0; i < dequeArr.size() / 2; i++)
     {
         l_Deque.push_back(*it);
         it++;
@@ -152,6 +152,18 @@ std::list<int> PmergeMe::get_List()
 std::deque<int> PmergeMe::get_Deque()
 {
     return (this->_Deque);
+}
+
+PmergeMe::PmergeMe(const PmergeMe &copy)
+{
+    *this = copy;
+}
+
+PmergeMe &PmergeMe::operator=(const PmergeMe &copy)
+{
+    this->_List = copy._List;
+    this->_Deque = copy._Deque;
+    return (*this);
 }
 
 PmergeMe::~PmergeMe()

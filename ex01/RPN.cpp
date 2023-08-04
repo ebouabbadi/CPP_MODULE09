@@ -7,7 +7,7 @@ RPN::RPN()
 RPN::RPN(char *av)
 {
     this->_arg = av;
-    this->parseRPN();
+    this->workRPN();
 }
 
 std::string eraseSpaces(std::string input)
@@ -17,7 +17,7 @@ std::string eraseSpaces(std::string input)
         return "";
     size_t last = input.find_last_not_of(' ');
     return input.substr(first, last - first + 1);
-}        
+}
 void RPN::split_arg(std::string arg)
 {
     arg = eraseSpaces(arg);
@@ -67,7 +67,6 @@ void RPN::calculateNumber(char _c)
     }
     else if (_c == '-' && this->_Rpn.size() >= 2)
     {
-        std::cout<<",,,,\n";
         int b = this->_Rpn[this->_Rpn.size() - 1];
         this->_Rpn.pop_back();
         int a = this->_Rpn[this->_Rpn.size() - 1];
@@ -88,13 +87,15 @@ void RPN::calculateNumber(char _c)
         this->_Rpn.pop_back();
         int a = this->_Rpn[this->_Rpn.size() - 1];
         this->_Rpn.pop_back();
+        if (b == 0)
+            throw "undefined.";
         this->_Rpn.push_back(a / b);
     }
     else
         throw "Error.";
 }
 
-void RPN::parseRPN()
+void RPN::workRPN()
 {
     this->split_arg(this->_arg);
     for (size_t i = 0; i < this->_T.size(); i++)
@@ -107,14 +108,28 @@ void RPN::parseRPN()
     for (size_t i = 0; i < this->_T.size(); i++)
         this->calculateNumber(this->_T[i][0]);
     if (this->_Rpn.size() == 1)
-	{
-		int result = this->_Rpn[this->_Rpn.size() - 1];
-		this->_Rpn.pop_back();
-		std::cout << result << std::endl;
-	}
-	else
-		throw "Error.";
+    {
+        int result = this->_Rpn[this->_Rpn.size() - 1];
+        this->_Rpn.pop_back();
+        std::cout << result << std::endl;
+    }
+    else
+        throw "Error.";
 }
+
+RPN::RPN(const RPN &copy)
+{
+    *this = copy;
+}
+
+RPN &RPN::operator=(const RPN &copy)
+{
+    this->_arg = copy._arg;
+    this->_T = copy._T;
+    this->_Rpn = copy._Rpn;
+    return (*this);
+}
+
 RPN::~RPN()
 {
 }

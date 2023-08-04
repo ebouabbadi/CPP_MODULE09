@@ -14,6 +14,5 @@ int main(int ac, char **av)
     {
         std::cerr <<str<< '\n';
     }
-
     return (0);
 }

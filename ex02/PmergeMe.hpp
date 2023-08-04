@@ -13,6 +13,8 @@ private:
 
 public:
     PmergeMe(char **av, int ac);
+    PmergeMe(const PmergeMe &copy);
+    PmergeMe    &operator=(const PmergeMe &copy);
     void readPositiveInteger(char **av, int ac);
     void    print_List();
     void    print_Deque();

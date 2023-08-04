@@ -22,6 +22,8 @@ private:
 public:
     BitcoinExchange();
     BitcoinExchange(char *av);
+    BitcoinExchange(const BitcoinExchange &copy);
+    BitcoinExchange &operator=(const BitcoinExchange &copy);
     std::string openAndReadFile(std::string nameFile);
     void shippingData();
     int parsingInput(std::string str);
